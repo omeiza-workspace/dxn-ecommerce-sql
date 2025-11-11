@@ -30,11 +30,10 @@ email_domains = ["gmail.com", "hotmail.com", "ymail.com", "yahoomail.com", "outl
 end_date = datetime.now()
 start_date = end_date - timedelta(days=180)
 
-def custom_email(name):
-    # Create username from name and a random number
-    user_name = name.lower().replace(' ', '.') + str(random.randint(10,99))
+def customize_email(fake_email):
     domain = random.choice(email_domains)
-    return f"{user_name}@{domain}"
+    name = fake_email.split('@')[0]
+    return f"{name}@{domain}"
 
 def uk_address():
     street = fake.street_address()
@@ -65,7 +64,7 @@ for serial_number in range(1, num_records + 1):
 
     customer_name = fake.name()
     gender = random.choice(["Male", "Female", "Other"])
-    email = custom_email(fake.unique.email())
+    email = customize_email(fake.unique.email())
     phone_number = uk_phone_number()
     address = uk_address()
 
