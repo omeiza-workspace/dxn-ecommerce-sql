@@ -1,0 +1,149 @@
+School of Business, Arts, Social Sciences and
+Technology
+MSc Data Science and Artificial
+Intelligence Level: 7
+Module: Introduction to Programming and Data Management
+Assessment:
+Module Tutor:
+Weighting in Module:
+Hand out:
+Hand in:
+Assessment: Database design and implementation
+Anousheh Ramezani
+50%
+Monday 20th October 2025
+on or before 5pm Friday November 14th 2025 via Brightspace
+portal
+Learning outcomes to be assessed:
+• Demonstrate an effective understanding of the SQL language
+• Demonstrate knowledge and understanding of database theory, techniques and
+applications
+• Understand how Python, SQL and relational databases can be integrated to form
+effective programming solutions
+What is required?
+• A data model of a relational database in the form of an Entity-Relationship diagram
+• The resulting database implemented in MySQL or Python (SQLite).
+• 3,500-word reflective essay critically analysing the decisions made during the design and
+implementation as well as documenting how the database can be queried.
+Assessment Brief. See
+the attached brief.
+
+Assessment & Grading Criteria:
+ASSESSMENT CRITERIA
+• Evaluate the technical dimensions of database architectures and solutions
+• Demonstrate knowledge and understanding of database theory, techniques and
+applications as informed by research and practice at the forefront of the discipline
+• Combine database theory, research and practice at the forefront of the discipline and use it
+to guide the design and implementation of robust data-centric solutions
+• Demonstrate competency in using data-centric approaches to assess and analyse data sets
+to generate insights
+• Communicate solutions and insights to technical and non-technical audiences
+MSc Data Science and Artificial Intelligence: Introduction to Programming and Data Management
+Assignment Brief:
+In this assignment, you are required to design and implement a relational database using MySQL or
+Python (SQLite). Your relational database should be designed to store
+and manage data for the project topic that you selected in week2 (you should design the database of your
+own. Ensure that you inform the module leader if you decide to change your topic). The steps that you
+should follow for this assignment are presented below:
+1. Undertake database planning and requirement gathering steps. These will consist of defining the
+mission statement, mission objectives and any assumptions that you make before the conceptual design
+of the database.
+You can search for similar databases from websites like Kaggle or other websites provided in module
+reading and define the requirements of the database that you are going to design (in Kaggle website
+various examples are provided) or generate synthetic data (links are provided in module reading). You
+can add more attributes and change the values (your database should not be exactly the same as the
+databases that you extracted from Kaggle! or the examples in lectures).
+You may propose additional features and other functions that could be added and hence should be
+taken into consideration when designing your database (marks will be awarded for the quality, novelty,
+and originality of your design)
+2. Design a relational database and create a logical model represented by an Entity-Relationship Diagram
+(ERD). Your design process should progress from conceptual to logical models. You will need to
+identify, for example:
+a. Entities
+b. Attributes & constraints
+c. Relations & their cardinality
+d. Candidate, primary, foreign & composite keys if there are any
+Your database design will need to be in Third/Boyce Normal Form (3NF).
+3. Identify the research objectives and enquiries likely to be made of the database by the users. At this
+stage, these need only be expressed in bullet points or a table, and not in SQL query languages (you
+will have to implement them later in MySQL as explained in Step 7).
+4. Implement the relational database using MySQL (in the case of a relational database).
+5. Keep records of the construction of your database (screenshots or copy/paste text).
+6. Collect then insert data into your database. The data should be representative of what the database will
+store in practice and should be substantial enough to demonstrate the functioning of your database and
+generate interesting insights. Keep records of your progress on the collection and testing of the data.
+7. Create a series of MySQL queries that are representative of those likely to be used by the intended
+operators. Keep records of the queries and their results. Report any insights that you generate from
+your data.
+8. Propose a conceptual, logical and a physical ERD.
+MSc Data Science and Artificial Intelligence: Introduction to Programming and Data Management
+9. Write a 3,500-word reflective essay identifying and describing the key decisions made during the
+design and implementation of your database(s); this essay will be based on the journal you were
+encouraged to keep throughout the build section of the module.
+Submission requirements:
+1. MySQL scripts of the build, population and testing of your database along with the script to generate
+insights from your data.
+2. Your database in electronic form (the command to export a database in MySQL is ‘mysqldump’).
+3. A reflective essay critically analysing the decisions made during the design and implementation of
+your database. The report should have less than 3,500 (excludes appendices and bibliographies)
+4. Submit your essay as two files: one Word version and one PDF version. If you write your essay in
+Pages or another application, convert it to PDF/Word when you have finished and check that all
+diagrams and tables are visible. Submit your scripts and dump file as a single Zip file.
+5. The name of the files should match the pattern SXXXXXX.pdf, SXXXXXX.doc(x) and
+SXXXXXX.zip where sXXXXXX is your UoS student number. Therefore, your submission should
+include three files: the report files in PDF and doc(x) formats as well as the script/dump files
+stored in a zip file. Ensure that the report document is also marked with your UoS number (student
+ID). Your name should not appear anywhere in the files.
+6. Your report should use line spacing of 1.5 and body font size of 12pt.
+7. Submit all files into Brightspace together and double-check that all expected files are safely submitted.
+Do not zip/compress your files in the same folder before submission as Turnitin will not be able
+to check your report for plagiarism.
+8. If your submission exceeds the word count by up to 10% then there will be no penalty applied.
+Submissions that exceed the word count by more than 10% will be applied a fixed penalty of 5
+percentage points (i.e., 5 marks). In all cases, the penalised mark will not be reduced below a pass
+level, assuming the work merits a pass. Tables, diagrams (including associated legends), appendices,
+reference lists, tables of contents, footnotes, and endnotes are excluded from the word count however
+should be used appropriately. It is for the Module Leader to decide if there is an excessive or
+inappropriate use of components excluded from the word count.
+9. All bibliographies must be formatted according to UoS Harvard style. For more details, see
+https://libguides.uos.ac.uk/academic/referencing/Harvard
+10. Your submitted report will be checked for plagiarism using Turnitin and any plagiarism detected will
+be dealt with seriously according to the University’s policy for plagiarism, so paraphrase and cite your
+references carefully.
+11. Remember that you can run a similarity report check once before submission by uploading your report
+document to the Similarity Report Check folder.
+MSc Data Science and Artificial Intelligence: Introduction to Programming and Data Management
+Assessment Rubric:
+The following rubrics will be used in the marking of your assessment
+Max marks Feedback Mark
+Relational DB Design (35 marks)
+Planning and requirement gathering (mission
+statement, mission objectives, assumptions)
+5
+Conceptual design (entities, relationships) 10
+Logical design 10
+Physical design 5
+Potential enquiries 5
+Relational DB Implementation (40 marks)
+Database build (tables, collections) 5
+Finding appropriate data and populating the
+database
+10
+Queries to test and generate insights from the
+database (inclusion of query outputs)
+15
+Discussing security issues (access control,
+encryption, backup, views), performance
+optimisation (e.g. EXPLAIN, indexes) and other
+considerations (e.g. potential problems, changes
+over time)
+10
+Presentation & Referencing (25 marks)
+Presentation quality (spelling, grammar, editing,
+structure, quality of writing, accessibility to non-
+technical audiences, ease to access and run
+scripts)
+15
+Strength of references and citation format 10
+Final Mark 100
+
