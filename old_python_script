@@ -1,0 +1,184 @@
+import csv
+import random
+import os
+from faker import Faker
+from datetime import datetime, timedelta
+
+# UK locale
+fake = Faker('en_GB')
+Faker.seed(42)
+random.seed(42)
+
+NUM_CUSTOMERS = 500
+NUM_SUPPLIERS = 50
+NUM_PRODUCTS = 100
+NUM_INVENTORY = 50
+NUM_ROWS = 2000
+
+# Major towns in Suffolk and Norfolk for address locality
+suffolk_towns = [
+    "Ipswich", "Bury St Edmunds", "Lowestoft", "Felixstowe", "Stowmarket",
+    "Newmarket", "Hadleigh", "Haverhill"
+]
+norfolk_towns = [
+    "Norwich", "Great Yarmouth", "King's Lynn", "Thetford", "Dereham",
+    "Wymondham", "Fakenham", "Attleborough"
+]
+all_towns = suffolk_towns + norfolk_towns
+
+order_statuses = ["delivered", "shipped", "pending"]
+
+email_domains = ["gmail.com", "hotmail.com", "ymail.com", "yahoomail.com", "outlook.com"]
+
+def uk_phone_number():
+    number = fake.msisdn()[-10:]  # get last 10 digits from msisdn()
+    return f'+44{number}'
+
+def uk_address():
+    street = fake.street_address()
+    town = random.choice(all_towns)
+    postcode = fake.postcode()
+    return f'{street}, {town}, {postcode}'
+
+def custom_email(name):
+    # Create username from name and a random number
+    user_name = name.lower().replace(' ', '.') + str(random.randint(10,99))
+    domain = random.choice(email_domains)
+    return f"{user_name}@{domain}"
+def custom_email():
+    while True:
+        email = fake.email()
+        domain = email.split('@')[1]
+        if domain in email_domains:
+            return email
+
+# Generate customers
+customers = []
+for i in range(1, NUM_CUSTOMERS + 1):
+    customers.append({
+        'customer_id': i,
+        'customer_name': fake.name(),
+        'Gender': random.choice(['Male', 'Female']),
+        'email': custom_email(),
+        'phone_number': uk_phone_number(),
+        'address': uk_address()
+    })
+
+# Generate suppliers
+suppliers = []
+for i in range(1, NUM_SUPPLIERS + 1):
+    suppliers.append({
+        'supplier_id': i,
+        'supplier_name': fake.company(),
+        'contact_info': uk_phone_number()
+    })
+
+# Generate inventory
+inventories = []
+for i in range(1, NUM_INVENTORY + 1):
+    inventories.append({
+        'inventory_id': i,
+        'location': random.choice(all_towns),
+        'stock_quantity': random.randint(50, 500)
+    })
+
+# Track current stock
+current_stock = {inv['inventory_id']: inv['stock_quantity'] for inv in inventories}
+
+# Generate products linked to suppliers & inventory
+categories = ['Electronics', 'Apparel', 'Books', 'Home', 'Beauty', 'Toys']
+products = []
+for i in range(1, NUM_PRODUCTS + 1):
+    products.append({
+        'product_id': i,
+        'product_name': fake.word().capitalize(),
+        'product_category': random.choice(categories),
+        'supplier_id': random.choice(suppliers)['supplier_id'],
+        'inventory_id': random.choice(inventories)['inventory_id']
+    })
+
+start_date = datetime(2022, 1, 1)
+end_date = datetime(2022, 6, 30)
+days_range = (end_date - start_date).days
+
+def pick_customer():
+    if random.random() < 0.7:
+        return random.choice(customers)
+    else:
+        new_id = len(customers) + 1
+        new_cust = {
+            'customer_id': new_id,
+            'customer_name': fake.name(),
+            'Gender': random.choice(['Male', 'Female']),
+            'email': custom_email(),
+            'phone_number': uk_phone_number(),
+            'address': uk_address()
+        }
+        customers.append(new_cust)
+        return new_cust
+
+rows = []
+for order_item_id in range(1, NUM_ROWS + 1):
+    customer = pick_customer()
+    product = random.choice(products)
+    supplier = next((s for s in suppliers if s['supplier_id'] == product['supplier_id']), None)
+    inventory = next((inv for inv in inventories if inv['inventory_id'] == product['inventory_id']), None)
+
+    order_id = random.randint(1, 1000)
+    quantity = random.randint(1, 5)
+    unit_price = round(random.uniform(5.0, 150.0), 2)
+    order_date = start_date + timedelta(days=random.randint(0, days_range))
+    order_status = fake.random_element(elements=order_statuses)
+
+    stock_available = current_stock[inventory['inventory_id']]
+    quantity_to_reduce = min(quantity, stock_available)
+    remaining_stock = stock_available - quantity_to_reduce
+    current_stock[inventory['inventory_id']] = remaining_stock
+
+    row = {
+        'serial_number': order_item_id,
+        'order_id': order_id,
+        'customer_id': customer['customer_id'],
+        'customer_name': customer['customer_name'],
+        'Gender': customer['Gender'],
+        'email': customer['email'],
+        'phone_number': customer['phone_number'],
+        'address': customer['address'],
+        'product_id': product['product_id'],
+        'product_name': product['product_name'],
+        'product_category': product['product_category'],
+        'supplier_id': supplier['supplier_id'] if supplier else None,
+        'supplier_name': supplier['supplier_name'] if supplier else None,
+        'contact_info': supplier['contact_info'] if supplier else None,
+        'inventory_id': inventory['inventory_id'] if inventory else None,
+        'location': inventory['location'] if inventory else None,
+        'stock_quantity': stock_available,
+        'quantity': quantity_to_reduce,
+        'unit_price': unit_price,
+        'order_date': order_date.strftime('%Y-%m-%d'),
+        'order_status': order_status,
+        'remaining_stock': remaining_stock
+    }
+    rows.append(row)
+
+fieldnames = [
+    'serial_number', 'order_id',
+    'customer_id', 'customer_name', 'Gender', 'email', 'phone_number', 'address',
+    'product_id', 'product_name', 'product_category',
+    'supplier_id', 'supplier_name', 'suppli',
+    'inventory_id', 'location', 'stock_quantity',
+    'quantity', 'unit_price', 'order_date', 'order_status', 'remaining_stock'
+]
+
+desktop_path = os.path.join(os.environ['USERPROFILE'], 'Desktop')
+filename = os.path.join(desktop_path, 'combined_ecommerce_data_uk.csv')
+
+with open(filename, 'w', newline='') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(rows)
+
+print(f"Combined UK ecommerce dataset with {NUM_ROWS} rows saved as {filename}")
+
+
+
