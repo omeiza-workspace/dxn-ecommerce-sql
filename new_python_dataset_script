@@ -8,15 +8,43 @@ fake = Faker('en_GB')
 Faker.seed(42)
 random.seed(42)
 
+# Major towns in Suffolk and Norfolk for address locality
+suffolk_towns = [
+    "Ipswich", "Bury St Edmunds", "Lowestoft", "Felixstowe", "Stowmarket",
+    "Newmarket", "Hadleigh", "Haverhill"
+]
+
+norfolk_towns = [
+    "Norwich", "Great Yarmouth", "King's Lynn", "Thetford", "Dereham",
+    "Wymondham", "Fakenham", "Attleborough"
+]
+
 # Constants
 num_records = 2000
-locations = ["Norfolk County Council", "Suffolk County Council"]
+locations = suffolk_towns + norfolk_towns
 categories = ["Electronics", "Home & Kitchen", "Fashion", "Sports", "Books"]
 order_statuses = ["Pending", "Shipped", "Delivered", "Cancelled"]
+email_domains = ["gmail.com", "hotmail.com", "ymail.com", "yahoomail.com", "outlook.com"]
 
 # Date range: past 6 months
 end_date = datetime.now()
 start_date = end_date - timedelta(days=180)
+
+def custom_email(name):
+    # Create username from name and a random number
+    user_name = name.lower().replace(' ', '.') + str(random.randint(10,99))
+    domain = random.choice(email_domains)
+    return f"{user_name}@{domain}"
+
+def uk_address():
+    street = fake.street_address()
+    location = random.choice(locations)
+    postcode = fake.postcode()
+    return f'{street}, {location}, {postcode}'
+
+def uk_phone_number():
+    number = fake.msisdn()[-10:]  # get last 10 digits from msisdn()
+    return f'+44{number}'
 
 # Data containers
 data = []
@@ -34,28 +62,28 @@ for serial_number in range(1, num_records + 1):
     product_id = random.choice(product_ids)
     supplier_id = random.choice(supplier_ids)
     inventory_id = random.choice(inventory_ids)
-    
+
     customer_name = fake.name()
     gender = random.choice(["Male", "Female", "Other"])
-    email = fake.unique.email()
-    phone_number = fake.phone_number()
-    address = fake.street_address() + ", " + random.choice(locations)
-    
+    email = custom_email(fake.unique.email())
+    phone_number = uk_phone_number()
+    address = uk_address()
+
     product_name = fake.word().capitalize() + " " + random.choice(["Pro", "Lite", "Max"])
     product_category = random.choice(categories)
-    
+
     supplier_name = fake.company()
-    supplier_phone = fake.phone_number()
+    supplier_phone = uk_phone_number()
     supplier_email = fake.company_email()
-    
+
     stock_quantity = random.randint(10, 500)
     quantity = random.randint(1, 5)
     unit_price = round(random.uniform(10.0, 500.0), 2)
     remaining_stock = stock_quantity - quantity
-    
+
     order_date = fake.date_between(start_date=start_date, end_date=end_date)
     order_status = random.choice(order_statuses)
-    
+
     data.append([
         serial_number, order_id, customer_id, customer_name, gender, email,
         phone_number, address, product_id, product_name, product_category,
